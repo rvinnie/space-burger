@@ -1,7 +1,4 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-
-import { ingredientPropType } from '@utils/prop-types';
 
 import styles from './burger-ingredients.module.css';
 
@@ -43,8 +40,4 @@ export const BurgerIngredients = ({ ingredients }) => {
       </nav>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
