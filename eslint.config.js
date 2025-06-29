@@ -73,6 +73,7 @@ export default tseslint.config([
       ],
       'react/jsx-uses-react': 'off',
       'react/prop-types': 'off',
+      'react-hooks/exhaustive-deps': 'off'
     },
     settings: {
       react: {

@@ -21,7 +21,7 @@ export default {
     'declaration-empty-line-before': 'never',
     'font-family-name-quotes': 'always-unless-keyword',
     'function-url-no-scheme-relative': true,
-    'number-max-precision': 2,
+    'number-max-precision': 3,
     'order/order': ['custom-properties', 'declarations'],
     'order/properties-order': [
       'all',
