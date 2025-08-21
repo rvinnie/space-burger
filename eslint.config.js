@@ -1,3 +1,5 @@
+import path from 'path';
+
 import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import perfectionist from 'eslint-plugin-perfectionist';
@@ -7,7 +9,6 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
-import path from 'path';
 import tseslint from 'typescript-eslint';
 import { fileURLToPath } from 'url';
 
@@ -59,7 +60,8 @@ export default tseslint.config([
           groups: [
             'value-builtin',
             'value-external',
-            ['value-internal', 'value-parent', 'value-sibling'],
+            'value-internal',
+            ['value-parent', 'value-sibling'],
             'type-import',
             'type-internal',
             ['type-parent', 'type-sibling', 'type-index'],
@@ -67,13 +69,27 @@ export default tseslint.config([
             'side-effect-style',
             'style',
           ],
-          internalPattern: ['^@components/', '^@services/', '^@pages/', '^@utils/'],
+          internalPattern: [
+            '^/',
+            '^@components/',
+            '^@contexts/',
+            '^@hooks/',
+            '^@pages/',
+            '^@services/',
+            '^@utils/',
+          ],
+          customGroups: {
+            value: {
+              'base-components': ['/*/*/[!-]*/*.*'],
+              'compound-components': ['/*/*/*-*/*.*'],
+            },
+          },
           newlinesBetween: 'always',
         },
       ],
       'react/jsx-uses-react': 'off',
       'react/prop-types': 'off',
-      'react-hooks/exhaustive-deps': 'off'
+      'react-hooks/exhaustive-deps': 'off',
     },
     settings: {
       react: {
