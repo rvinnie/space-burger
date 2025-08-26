@@ -27,9 +27,12 @@
     "paths": {
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@hoc/*": ["src/hoc/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@pages/*": ["src/pages/*"],
       "@services/*": ["src/services/*"],
-      "@utils/*": ["src/utils/*"],
-      "@pages/*": ["src/pages/*"]
+      "@utils/*": ["src/utils/*"]
     }
   },
   "plugins": [{ "name": "typescript-plugin-css-modules" }],
