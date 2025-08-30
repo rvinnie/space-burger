@@ -1,9 +1,15 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 
+import { IngredientGroup } from '@components/burger-ingredients/ingredient-details/ingredient-details';
+
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients = ({ ingredients }) => {
-  console.log(ingredients);
+  const groupFieldValuePairs = new Map([
+    ['bun', 'Булки'],
+    ['main', 'Начинки'],
+    ['sauce', 'Соусы'],
+  ]);
 
   return (
     <section className={styles.burger_ingredients}>
@@ -16,7 +22,7 @@ export const BurgerIngredients = ({ ingredients }) => {
               /* TODO */
             }}
           >
-            Булки
+            {groupFieldValuePairs.get('bun')}
           </Tab>
           <Tab
             value="main"
@@ -25,7 +31,7 @@ export const BurgerIngredients = ({ ingredients }) => {
               /* TODO */
             }}
           >
-            Начинки
+            {groupFieldValuePairs.get('main')}
           </Tab>
           <Tab
             value="sauce"
@@ -34,10 +40,21 @@ export const BurgerIngredients = ({ ingredients }) => {
               /* TODO */
             }}
           >
-            Соусы
+            {groupFieldValuePairs.get('sauce')}
           </Tab>
         </ul>
       </nav>
+      <section className={styles.burger_ingredients}>
+        {Array.from(groupFieldValuePairs).map(([fieldName, valueName]) => (
+          <IngredientGroup
+            key={fieldName}
+            groupName={valueName}
+            ingredients={ingredients.filter(
+              (ingredient) => ingredient.type === fieldName
+            )}
+          />
+        ))}
+      </section>
     </section>
   );
 };
