@@ -1,0 +1,12 @@
+.item {
+  position: relative;
+  justify-items: center;
+}
+
+.price_container {
+  justify-items: center;
+}
+
+.price {
+  display: flex;
+}

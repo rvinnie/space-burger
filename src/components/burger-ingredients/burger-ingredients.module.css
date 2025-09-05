@@ -13,3 +13,9 @@
   text-align: center;
   list-style-type: none;
 }
+
+.ingredient_groups_container {
+  overflow-y: scroll;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
+}
