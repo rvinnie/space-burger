@@ -17,17 +17,3 @@
   row-gap: 10px;
   overflow-y: scroll;
 }
-
-.price_container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 40px;
-  padding-top: 40px;
-}
-
-.price {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
