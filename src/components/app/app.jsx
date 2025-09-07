@@ -1,11 +1,22 @@
+import { Preloader } from '@krgaa/react-developer-burger-ui-components';
+
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import { ingredients } from '@utils/ingredients';
+import useApi from '@hooks/useApi';
 
 import styles from './app.module.css';
 
+const spaceApiUrl = 'https://norma.nomoreparties.space/api/ingredients';
+
 export const App = () => {
+  const { results, loading, error } = useApi(spaceApiUrl);
+  const errComponent = (
+    <div className="text text_type_main-medium mt-5">
+      Произошла ошибка загрузки данных...
+    </div>
+  );
+
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -13,8 +24,18 @@ export const App = () => {
         Соберите бургер
       </h1>
       <main className={`${styles.main} pl-5 pr-5`}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} />
+        {loading ? (
+          <Preloader />
+        ) : error ? (
+          errComponent
+        ) : results && results.data && results.data.length > 0 ? (
+          <>
+            <BurgerIngredients ingredients={results.data} />
+            <BurgerConstructor ingredients={results.data} />
+          </>
+        ) : (
+          errComponent
+        )}
       </main>
     </div>
   );

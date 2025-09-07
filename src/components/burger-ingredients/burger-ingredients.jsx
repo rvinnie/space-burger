@@ -84,7 +84,7 @@ export const BurgerIngredients = ({ ingredients }) => {
             ref={(el) => (groupRefs.current[fieldName] = el)}
             key={fieldName}
             groupName={valueName}
-            ingredients={ingredients.filter(
+            ingredients={ingredients?.filter(
               (ingredient) => ingredient.type === fieldName
             )}
           />

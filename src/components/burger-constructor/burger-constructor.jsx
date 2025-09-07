@@ -5,19 +5,24 @@ import { ConstructorElementContainer } from '@components/burger-constructor/cons
 import styles from './burger-constructor.module.css';
 
 export const BurgerConstructor = ({ ingredients }) => {
+  const bun = ingredients?.find((element) => {
+    return element.type === 'bun';
+  });
+
+  const bodyIngredients = ingredients?.filter((element) => {
+    return element.type !== 'bun';
+  });
+
   return (
     <section className={`${styles.burger_constructor} ml-4`}>
       <section className={`${styles.constructor_container}`}>
-        <ConstructorElementContainer ingredient={ingredients[0]} ingredientType="top" />
+        <ConstructorElementContainer ingredient={bun} ingredientType="top" />
         <div className={`${styles.constructor_body}`}>
-          {ingredients.slice(1, 10).map((ingredient) => (
+          {bodyIngredients.map((ingredient) => (
             <ConstructorElementContainer ingredient={ingredient} key={ingredient._id} />
           ))}
         </div>
-        <ConstructorElementContainer
-          ingredient={ingredients[0]}
-          ingredientType="bottom"
-        />
+        <ConstructorElementContainer ingredient={bun} ingredientType="bottom" />
       </section>
       <ConstructorPrice price={610} />
     </section>
