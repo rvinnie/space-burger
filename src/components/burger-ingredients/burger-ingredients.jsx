@@ -1,7 +1,9 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { useRef, useState, useEffect } from 'react';
 
+import { IngredientDetails } from '@components/burger-ingredients/ingredient-details/ingredient-details';
 import { IngredientGroup } from '@components/burger-ingredients/ingredient-group/ingredient-group';
+import { Modal } from '@components/modal/modal';
 
 import styles from './burger-ingredients.module.css';
 
@@ -12,6 +14,10 @@ export const BurgerIngredients = ({ ingredients }) => {
     ['sauce', 'Соусы'],
   ]);
 
+  const [openedModal, setModalOpen] = useState({
+    isOpened: false,
+    ingredientId: '',
+  });
   const [activeTab, setActiveTab] = useState('bun');
   const groupsContainerRef = useRef(null);
   const groupRefs = useRef({});
@@ -59,6 +65,13 @@ export const BurgerIngredients = ({ ingredients }) => {
     };
   }, [handleScroll]);
 
+  const updateIngredientId = (newId) => {
+    setModalOpen({
+      isOpened: true,
+      ingredientId: newId,
+    });
+  };
+
   return (
     <section className={`${styles.burger_ingredients}`}>
       <nav>
@@ -84,12 +97,25 @@ export const BurgerIngredients = ({ ingredients }) => {
             ref={(el) => (groupRefs.current[fieldName] = el)}
             key={fieldName}
             groupName={valueName}
+            updateIngredientId={updateIngredientId}
             ingredients={ingredients?.filter(
               (ingredient) => ingredient.type === fieldName
             )}
           />
         ))}
       </section>
+      {openedModal.isOpened && (
+        <Modal
+          header={'Детали ингредиента'}
+          onClose={() => setModalOpen({ isOpened: false, ingredientId: '' })}
+        >
+          <IngredientDetails
+            ingredient={ingredients.find((element) => {
+              return element._id === openedModal.ingredientId;
+            })}
+          />
+        </Modal>
+      )}
     </section>
   );
 };

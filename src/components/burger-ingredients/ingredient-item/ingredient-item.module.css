@@ -1,6 +1,10 @@
-.item {
+.ingredient_item {
   position: relative;
   justify-items: center;
+}
+
+.ingredient_item:hover {
+  cursor: pointer;
 }
 
 .price_container {

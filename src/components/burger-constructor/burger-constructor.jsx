@@ -1,10 +1,15 @@
-import { ConstructorPrice } from '@/components/burger-constructor/constructor-price/constructor-price';
+import { useState } from 'react';
 
 import { ConstructorElementContainer } from '@components/burger-constructor/constructor-element-container/constructor-element-container';
+import { ConstructorPrice } from '@components/burger-constructor/constructor-price/constructor-price';
+import { Modal } from '@components/modal/modal';
+import { OrderDetails } from '@components/order/order-details/order-details';
 
 import styles from './burger-constructor.module.css';
 
 export const BurgerConstructor = ({ ingredients }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const bun = ingredients?.find((element) => {
     return element.type === 'bun';
   });
@@ -24,7 +29,12 @@ export const BurgerConstructor = ({ ingredients }) => {
         </div>
         <ConstructorElementContainer ingredient={bun} ingredientType="bottom" />
       </section>
-      <ConstructorPrice price={610} />
+      <ConstructorPrice price={610} onModalOpen={() => setModalOpen(true)} />
+      {isModalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <OrderDetails orderNumber={'034536'} />
+        </Modal>
+      )}
     </section>
   );
 };
