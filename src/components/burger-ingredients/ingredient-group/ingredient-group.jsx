@@ -8,7 +8,7 @@ export const IngredientGroup = forwardRef(
   ({ ingredients, groupName, updateIngredientId }, ref) => {
     return (
       <section ref={ref} className={'pt-10'}>
-        <h1 className={'text text_type_main-medium mb-6'}>{groupName}</h1>
+        <h2 className={'text text_type_main-medium mb-6'}>{groupName}</h2>
         <div className={`${styles.group_list} pl-4`}>
           {ingredients?.map((ingredient, index) => (
             <IngredientItem

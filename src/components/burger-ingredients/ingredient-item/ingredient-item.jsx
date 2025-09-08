@@ -13,7 +13,7 @@ export const IngredientItem = ({
       onClick={() => updateIngredientId(ingredientInfo._id)}
     >
       <div className={`${styles.price_container} pl-4 pr-4`}>
-        <img className={'mb-1'} src={ingredientInfo.image} />
+        <img className={'mb-1'} src={ingredientInfo.image} alt={ingredientInfo.name} />
         <div className={`${styles.price} mb-1`}>
           <p className="text text_type_digits-default mr-1 mb-1">
             {ingredientInfo.price}
