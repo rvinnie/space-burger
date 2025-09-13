@@ -1,17 +1,29 @@
 body {
   margin: 0;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
 }
 
-/* Fix for scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
-@supports (scrollbar-color: auto) {
-  .custom-scroll {
-    scrollbar-color: #8585ad #2f2f37;
-    scrollbar-width: thin;
-  }
+::-webkit-scrollbar-track {
+  background: #2f2f37;
+  border-radius: 4px;
+}
 
-  body {
-    scrollbar-color: #8585ad #2f2f37;
-    scrollbar-width: thin;
-  }
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0c8;
+}
+
+* {
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
 }

@@ -1,0 +1,5 @@
+.pfc_element {
+  flex: 1;
+  min-width: max-content;
+  text-align: center;
+}

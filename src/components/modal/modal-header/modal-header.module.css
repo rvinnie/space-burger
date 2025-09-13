@@ -1,0 +1,17 @@
+.modal_header {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.modal_button {
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  background: none;
+  border: none;
+  outline: inherit;
+  cursor: pointer;
+}

@@ -2,6 +2,18 @@
   display: flex;
   flex-direction: column;
   width: 600px;
+  max-height: 100vh;
   padding-bottom: 20px;
-  color: var(--text-primary-color);
+}
+
+.constructor_container {
+  display: grid;
+  row-gap: 10px;
+  overflow: hidden;
+}
+
+.constructor_body {
+  display: grid;
+  row-gap: 10px;
+  overflow-y: scroll;
 }
