@@ -1,17 +1,26 @@
+import { addIngredient, setBun } from '@/services/burder-constructor';
 import { CurrencyIcon, Counter } from '@krgaa/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
+
+import { setIngredient } from '@services/ingredient-details';
 
 import styles from './ingredient-item.module.css';
 
-export const IngredientItem = ({
-  ingredientInfo,
-  updateIngredientId,
-  ingredientSelectedCount,
-}) => {
+export const IngredientItem = ({ ingredientInfo, ingredientSelectedCount }) => {
+  const dispatch = useDispatch();
+
+  const onClickIngredient = () => {
+    dispatch(setIngredient(ingredientInfo));
+
+    if (ingredientInfo.type === 'bun') {
+      dispatch(setBun(ingredientInfo));
+    } else {
+      dispatch(addIngredient(ingredientInfo));
+    }
+  };
+
   return (
-    <section
-      className={`${styles.ingredient_item}`}
-      onClick={() => updateIngredientId(ingredientInfo._id)}
-    >
+    <section className={`${styles.ingredient_item}`} onClick={onClickIngredient}>
       <div className={`${styles.price_container} pl-4 pr-4`}>
         <img className={'mb-1'} src={ingredientInfo.image} alt={ingredientInfo.name} />
         <div className={`${styles.price} mb-1`}>

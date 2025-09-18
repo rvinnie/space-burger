@@ -1,16 +1,30 @@
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import useApi from '@hooks/useApi';
+import {
+  getIngredients,
+  getIngredientsLoading,
+  getIngredientsError,
+  loadIngredients,
+} from '@services/burger-ingredients';
 
 import styles from './app.module.css';
 
-const spaceApiUrl = 'https://norma.nomoreparties.space/api/ingredients';
-
 export const App = () => {
-  const { results, loading, error } = useApi(spaceApiUrl);
+  const dispatch = useDispatch();
+
+  const ingredients = useSelector(getIngredients);
+  const ingredientsLoading = useSelector(getIngredientsLoading);
+  const ingredientsError = useSelector(getIngredientsError);
+
+  useEffect(() => {
+    dispatch(loadIngredients());
+  }, []);
+
   const errComponent = (
     <div className="text text_type_main-medium mt-5">
       Произошла ошибка загрузки данных...
@@ -24,14 +38,14 @@ export const App = () => {
         Соберите бургер
       </h1>
       <main className={`${styles.main} pl-5 pr-5`}>
-        {loading ? (
+        {ingredientsLoading ? (
           <Preloader />
-        ) : error ? (
+        ) : ingredientsError ? (
           errComponent
-        ) : results && results.data && results.data.length > 0 ? (
+        ) : ingredients && ingredients.data && ingredients.data.length > 0 ? (
           <>
-            <BurgerIngredients ingredients={results.data} />
-            <BurgerConstructor ingredients={results.data} />
+            <BurgerIngredients ingredients={ingredients.data} />
+            <BurgerConstructor ingredients={ingredients.data} />
           </>
         ) : (
           errComponent

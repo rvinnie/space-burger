@@ -9,7 +9,8 @@ export const ConstructorPrice = ({ price, onModalOpen }) => {
         <p className="text text_type_digits-medium">{price}</p>
         <CurrencyIcon type="primary" />
       </div>
-      <Button onClick={onModalOpen} size="medium" type="primary">
+
+      <Button disabled={price === 0} onClick={onModalOpen} size="medium" type="primary">
         Оформить заказ
       </Button>
     </section>
