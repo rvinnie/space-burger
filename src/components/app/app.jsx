@@ -1,5 +1,7 @@
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppHeader } from '@components/app-header/app-header';
@@ -43,10 +45,10 @@ export const App = () => {
         ) : ingredientsError ? (
           errComponent
         ) : ingredients && ingredients.data && ingredients.data.length > 0 ? (
-          <>
+          <DndProvider backend={HTML5Backend}>
             <BurgerIngredients ingredients={ingredients.data} />
-            <BurgerConstructor ingredients={ingredients.data} />
-          </>
+            <BurgerConstructor />
+          </DndProvider>
         ) : (
           errComponent
         )}

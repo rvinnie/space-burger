@@ -30,9 +30,19 @@ export const burgerConstructorSlice = createSlice({
         (ingredient) => ingredient.constructorElementId !== action.payload
       );
     },
+    moveIngredients: (state, action) => {
+      const { dragIndex, hoverIndex } = action.payload;
+      const dragIngredient = state.ingredients[dragIndex];
+      const newIngredients = [...state.ingredients];
+
+      newIngredients.splice(dragIndex, 1);
+      newIngredients.splice(hoverIndex, 0, dragIngredient);
+
+      state.ingredients = newIngredients;
+    },
   },
 });
 
 export const { getBun, getIngredients } = burgerConstructorSlice.selectors;
-export const { setBun, addIngredient, removeIngredient } =
+export const { setBun, addIngredient, removeIngredient, moveIngredients } =
   burgerConstructorSlice.actions;
