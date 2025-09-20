@@ -1,0 +1,34 @@
+.placeholder_container {
+  display: grid;
+  grid-template-columns: 32px 1fr 16px;
+  align-items: center;
+  gap: 8px;
+}
+
+.placeholder {
+  grid-column: 2;
+  padding: 28px 24px;
+  text-align: center;
+  background-color: #2f2f37;
+  border: 1px solid #2f2f37;
+}
+
+.placeholder_hover {
+  border: 1px solid #0cc;
+}
+
+.placeholder_drop {
+  border: 1px solid #4c4cff;
+}
+
+.placeholder_top {
+  border-radius: var(--top-constructor-item-border-radius);
+}
+
+.placeholder_bottom {
+  border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.placeholder_body {
+  border-radius: var(--common-border-radius-s);
+}

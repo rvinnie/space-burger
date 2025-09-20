@@ -1,5 +1,8 @@
+import { getBun, getIngredients } from '@/services/burder-constructor';
+import { getIngredient } from '@/services/ingredient-details';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import { IngredientDetails } from '@components/burger-ingredients/ingredient-details/ingredient-details';
 import { IngredientGroup } from '@components/burger-ingredients/ingredient-group/ingredient-group';
@@ -21,6 +24,36 @@ export const BurgerIngredients = ({ ingredients }) => {
   const [activeTab, setActiveTab] = useState('bun');
   const groupsContainerRef = useRef(null);
   const groupRefs = useRef({});
+
+  const ingredientsInConstructor = useSelector(getIngredients);
+  const bunInConstructor = useSelector(getBun);
+
+  const ingredientsCounts = useMemo(() => {
+    let counts = {};
+
+    if (ingredientsInConstructor) {
+      counts = ingredientsInConstructor.reduce((accumulator, item) => {
+        accumulator[item._id] = (accumulator[item._id] || 0) + 1;
+        return accumulator;
+      }, {});
+    }
+
+    if (bunInConstructor) {
+      counts[bunInConstructor._id] = 2;
+    }
+
+    return counts;
+  }, [ingredientsInConstructor, bunInConstructor]);
+
+  const selectedIngredient = useSelector(getIngredient);
+  useEffect(() => {
+    if (selectedIngredient) {
+      setModalOpen({
+        isOpened: true,
+        ingredientId: selectedIngredient._id,
+      });
+    }
+  }, [selectedIngredient]);
 
   const handleTabClick = (tabValue) => {
     setActiveTab(tabValue);
@@ -65,13 +98,6 @@ export const BurgerIngredients = ({ ingredients }) => {
     };
   }, [handleScroll]);
 
-  const updateIngredientId = (newId) => {
-    setModalOpen({
-      isOpened: true,
-      ingredientId: newId,
-    });
-  };
-
   return (
     <section className={`${styles.burger_ingredients}`}>
       <nav>
@@ -97,7 +123,7 @@ export const BurgerIngredients = ({ ingredients }) => {
             ref={(el) => (groupRefs.current[fieldName] = el)}
             key={fieldName}
             groupName={valueName}
-            updateIngredientId={updateIngredientId}
+            ingredientsCounts={ingredientsCounts}
             ingredients={ingredients?.filter(
               (ingredient) => ingredient.type === fieldName
             )}

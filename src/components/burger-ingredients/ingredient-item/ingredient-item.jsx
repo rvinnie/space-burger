@@ -1,16 +1,27 @@
 import { CurrencyIcon, Counter } from '@krgaa/react-developer-burger-ui-components';
+import { useDrag } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+
+import { setIngredient } from '@services/ingredient-details';
 
 import styles from './ingredient-item.module.css';
 
-export const IngredientItem = ({
-  ingredientInfo,
-  updateIngredientId,
-  ingredientSelectedCount,
-}) => {
+export const IngredientItem = ({ ingredientInfo, ingredientSelectedCount }) => {
+  const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: ingredientInfo,
+  });
+
+  const onClickIngredient = () => {
+    dispatch(setIngredient(ingredientInfo));
+  };
+
   return (
     <section
+      ref={dragRef}
       className={`${styles.ingredient_item}`}
-      onClick={() => updateIngredientId(ingredientInfo._id)}
+      onClick={onClickIngredient}
     >
       <div className={`${styles.price_container} pl-4 pr-4`}>
         <img className={'mb-1'} src={ingredientInfo.image} alt={ingredientInfo.name} />
