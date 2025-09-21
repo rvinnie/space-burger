@@ -46,7 +46,7 @@ export const App = () => {
           errComponent
         ) : ingredients && ingredients.data && ingredients.data.length > 0 ? (
           <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients ingredients={ingredients.data} />
+            <BurgerIngredients />
             <BurgerConstructor />
           </DndProvider>
         ) : (

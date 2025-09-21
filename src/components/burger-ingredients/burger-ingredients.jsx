@@ -1,4 +1,5 @@
-import { getBun, getIngredients } from '@/services/burder-constructor';
+import { getBun, getConstructorIngredients } from '@/services/burder-constructor';
+import { getIngredients } from '@/services/burger-ingredients';
 import { getIngredient } from '@/services/ingredient-details';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { useRef, useState, useEffect, useMemo } from 'react';
@@ -10,7 +11,7 @@ import { Modal } from '@components/modal/modal';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
   const groupFieldValuePairs = new Map([
     ['bun', 'Булки'],
     ['main', 'Начинки'],
@@ -25,8 +26,9 @@ export const BurgerIngredients = ({ ingredients }) => {
   const groupsContainerRef = useRef(null);
   const groupRefs = useRef({});
 
-  const ingredientsInConstructor = useSelector(getIngredients);
+  const ingredientsInConstructor = useSelector(getConstructorIngredients);
   const bunInConstructor = useSelector(getBun);
+  const ingredients = useSelector(getIngredients);
 
   const ingredientsCounts = useMemo(() => {
     let counts = {};
@@ -124,7 +126,7 @@ export const BurgerIngredients = ({ ingredients }) => {
             key={fieldName}
             groupName={valueName}
             ingredientsCounts={ingredientsCounts}
-            ingredients={ingredients?.filter(
+            ingredients={ingredients.data.filter(
               (ingredient) => ingredient.type === fieldName
             )}
           />
@@ -136,7 +138,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           onClose={() => setModalOpen({ isOpened: false, ingredientId: '' })}
         >
           <IngredientDetails
-            ingredient={ingredients.find((element) => {
+            ingredient={ingredients.data.find((element) => {
               return element._id === openedModal.ingredientId;
             })}
           />

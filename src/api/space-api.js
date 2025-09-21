@@ -1,12 +1,15 @@
 import axios from 'axios';
 
-const API_SPACE_INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
-const API_SPACE_ORDERS_URL = 'https://norma.nomoreparties.space/api/orders';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
+
+const instance = axios.create({
+  baseURL: BASE_URL,
+});
 
 export const getIngredientsAPI = () => {
-  return axios.get(API_SPACE_INGREDIENTS_URL);
+  return instance.get('/ingredients');
 };
 
 export const createOrderAPI = (ingredients) => {
-  return axios.post(API_SPACE_ORDERS_URL, { ingredients });
+  return instance.post('/orders', { ingredients });
 };

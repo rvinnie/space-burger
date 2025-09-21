@@ -1,13 +1,15 @@
 import {
   addIngredient,
   getBun,
-  getIngredients,
+  getConstructorIngredients,
   moveIngredients,
+  clearIngredients,
   setBun,
 } from '@/services/burder-constructor';
 import {
   getOrderDetails,
   getOrderDetailsError,
+  getOrderDetailsLoading,
   createOrder,
 } from '@/services/order-details';
 import { useState, useMemo, useEffect, useCallback } from 'react';
@@ -45,26 +47,47 @@ export const BurgerConstructor = () => {
   });
 
   const orderDetails = useSelector(getOrderDetails);
+  const orderDetailsLoading = useSelector(getOrderDetailsLoading);
   const orderDetailsError = useSelector(getOrderDetailsError);
 
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
   const [orderNumber, setOrderNumber] = useState(0);
+
+  const closeModal = () => {
+    setError(false);
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     if (orderDetails) {
       setOrderNumber(orderDetails.order.number);
+      setLoading(false);
       setModalOpen(true);
+      setError(false);
+      dispatch(clearIngredients());
     }
   }, [orderDetails]);
 
   useEffect(() => {
+    if (orderDetailsLoading) {
+      setLoading(true);
+      setModalOpen(true);
+      setError(false);
+    }
+  }, [orderDetailsLoading]);
+
+  useEffect(() => {
     if (orderDetailsError) {
-      console.error('Произошла ошибка: ', orderDetailsError);
+      setLoading(false);
+      setModalOpen(true);
+      setError(true);
     }
   }, [orderDetailsError]);
 
   const bun = useSelector(getBun);
-  const bodyIngredients = useSelector(getIngredients);
+  const bodyIngredients = useSelector(getConstructorIngredients);
 
   const handleOrderClick = () => {
     dispatch(createOrder([bun, ...bodyIngredients, bun]));
@@ -131,6 +154,7 @@ export const BurgerConstructor = () => {
   };
 
   const isPriceDisabled = bun === null || bodyIngredients.length === 0;
+  const modalHeader = isError ? 'Произошла ошибка...' : '';
 
   return (
     <section className={`${styles.burger_constructor} ml-4`}>
@@ -145,8 +169,12 @@ export const BurgerConstructor = () => {
         isDisabled={isPriceDisabled}
       />
       {isModalOpen && (
-        <Modal onClose={() => setModalOpen(false)}>
-          <OrderDetails orderNumber={orderNumber} />
+        <Modal onClose={closeModal} header={modalHeader}>
+          <OrderDetails
+            orderNumber={orderNumber}
+            isLoading={isLoading}
+            isError={isError}
+          />
         </Modal>
       )}
     </section>
