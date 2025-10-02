@@ -1,5 +1,9 @@
+import { getBun, getConstructorIngredients } from '@/services/burder-constructor';
+import { getIngredients } from '@/services/burger-ingredients';
+import { getIngredient } from '@/services/ingredient-details';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import { IngredientDetails } from '@components/burger-ingredients/ingredient-details/ingredient-details';
 import { IngredientGroup } from '@components/burger-ingredients/ingredient-group/ingredient-group';
@@ -7,7 +11,7 @@ import { Modal } from '@components/modal/modal';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
   const groupFieldValuePairs = new Map([
     ['bun', 'Булки'],
     ['main', 'Начинки'],
@@ -21,6 +25,37 @@ export const BurgerIngredients = ({ ingredients }) => {
   const [activeTab, setActiveTab] = useState('bun');
   const groupsContainerRef = useRef(null);
   const groupRefs = useRef({});
+
+  const ingredientsInConstructor = useSelector(getConstructorIngredients);
+  const bunInConstructor = useSelector(getBun);
+  const ingredients = useSelector(getIngredients);
+
+  const ingredientsCounts = useMemo(() => {
+    let counts = {};
+
+    if (ingredientsInConstructor) {
+      counts = ingredientsInConstructor.reduce((accumulator, item) => {
+        accumulator[item._id] = (accumulator[item._id] || 0) + 1;
+        return accumulator;
+      }, {});
+    }
+
+    if (bunInConstructor) {
+      counts[bunInConstructor._id] = 2;
+    }
+
+    return counts;
+  }, [ingredientsInConstructor, bunInConstructor]);
+
+  const selectedIngredient = useSelector(getIngredient);
+  useEffect(() => {
+    if (selectedIngredient) {
+      setModalOpen({
+        isOpened: true,
+        ingredientId: selectedIngredient._id,
+      });
+    }
+  }, [selectedIngredient]);
 
   const handleTabClick = (tabValue) => {
     setActiveTab(tabValue);
@@ -65,13 +100,6 @@ export const BurgerIngredients = ({ ingredients }) => {
     };
   }, [handleScroll]);
 
-  const updateIngredientId = (newId) => {
-    setModalOpen({
-      isOpened: true,
-      ingredientId: newId,
-    });
-  };
-
   return (
     <section className={`${styles.burger_ingredients}`}>
       <nav>
@@ -97,8 +125,8 @@ export const BurgerIngredients = ({ ingredients }) => {
             ref={(el) => (groupRefs.current[fieldName] = el)}
             key={fieldName}
             groupName={valueName}
-            updateIngredientId={updateIngredientId}
-            ingredients={ingredients?.filter(
+            ingredientsCounts={ingredientsCounts}
+            ingredients={ingredients.data.filter(
               (ingredient) => ingredient.type === fieldName
             )}
           />
@@ -110,7 +138,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           onClose={() => setModalOpen({ isOpened: false, ingredientId: '' })}
         >
           <IngredientDetails
-            ingredient={ingredients.find((element) => {
+            ingredient={ingredients.data.find((element) => {
               return element._id === openedModal.ingredientId;
             })}
           />
