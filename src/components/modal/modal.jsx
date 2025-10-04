@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ModalHeader } from '@components/modal/modal-header/modal-header';
 
@@ -10,6 +11,12 @@ import styles from './modal.module.css';
 const modalRoot = document.getElementById('react-modals');
 
 export const Modal = ({ children, header, onClose }) => {
+  let navigate = useNavigate();
+
+  if (!onClose) {
+    onClose = () => navigate(-1);
+  }
+
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
