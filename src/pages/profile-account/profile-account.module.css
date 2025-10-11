@@ -1,0 +1,9 @@
+.account_container {
+  width: fit-content;
+  height: fit-content;
+  margin-top: 18vh;
+}
+
+.account_buttons {
+  float: right;
+}

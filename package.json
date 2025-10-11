@@ -35,7 +35,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.6.2",
+    "react-router-dom": "^7.9.3",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0"
   },
@@ -76,7 +76,7 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.34.1",
     "typescript-plugin-css-modules": "^5.1.0",
-    "vite": "^6.3.5",
+    "vite": "^7.1.9",
     "vite-plugin-checker": "^0.9.3",
     "vite-plugin-readable-classnames": "^1.5.2",
     "vite-plugin-sass-dts": "^1.3.31",

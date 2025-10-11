@@ -1,13 +1,10 @@
 import { getBun, getConstructorIngredients } from '@/services/burder-constructor';
 import { getIngredients } from '@/services/burger-ingredients';
-import { getIngredient } from '@/services/ingredient-details';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { useRef, useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { IngredientDetails } from '@components/burger-ingredients/ingredient-details/ingredient-details';
 import { IngredientGroup } from '@components/burger-ingredients/ingredient-group/ingredient-group';
-import { Modal } from '@components/modal/modal';
 
 import styles from './burger-ingredients.module.css';
 
@@ -18,10 +15,6 @@ export const BurgerIngredients = () => {
     ['sauce', 'Соусы'],
   ]);
 
-  const [openedModal, setModalOpen] = useState({
-    isOpened: false,
-    ingredientId: '',
-  });
   const [activeTab, setActiveTab] = useState('bun');
   const groupsContainerRef = useRef(null);
   const groupRefs = useRef({});
@@ -46,16 +39,6 @@ export const BurgerIngredients = () => {
 
     return counts;
   }, [ingredientsInConstructor, bunInConstructor]);
-
-  const selectedIngredient = useSelector(getIngredient);
-  useEffect(() => {
-    if (selectedIngredient) {
-      setModalOpen({
-        isOpened: true,
-        ingredientId: selectedIngredient._id,
-      });
-    }
-  }, [selectedIngredient]);
 
   const handleTabClick = (tabValue) => {
     setActiveTab(tabValue);
@@ -132,18 +115,6 @@ export const BurgerIngredients = () => {
           />
         ))}
       </section>
-      {openedModal.isOpened && (
-        <Modal
-          header={'Детали ингредиента'}
-          onClose={() => setModalOpen({ isOpened: false, ingredientId: '' })}
-        >
-          <IngredientDetails
-            ingredient={ingredients.data.find((element) => {
-              return element._id === openedModal.ingredientId;
-            })}
-          />
-        </Modal>
-      )}
     </section>
   );
 };
