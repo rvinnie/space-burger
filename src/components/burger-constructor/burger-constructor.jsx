@@ -11,22 +11,26 @@ import {
   getOrderDetailsError,
   getOrderDetailsLoading,
   createOrder,
+  clearOrderDetails,
 } from '@/services/order-details';
+import { getIsAuthenticated } from '@/services/user';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { ConstructorElementContainer } from '@components/burger-constructor/constructor-element-container/constructor-element-container';
 import { ConstructorPrice } from '@components/burger-constructor/constructor-price/constructor-price';
 import { Modal } from '@components/modal/modal';
 import { OrderDetails } from '@components/order/order-details/order-details';
 
-import { ConstructorElementPlaceholder } from './constructor-element-placeholder/constructor-element-placeholder';
+import { ConstructorElementShadow } from './constructor-element-shadow/constructor-element-shadow';
 
 import styles from './burger-constructor.module.css';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
+
   const [{ isHover, isBun, canDrop }, dropTarget] = useDrop({
     accept: 'ingredient',
     collect: (monitor) => {
@@ -49,15 +53,19 @@ export const BurgerConstructor = () => {
   const orderDetails = useSelector(getOrderDetails);
   const orderDetailsLoading = useSelector(getOrderDetailsLoading);
   const orderDetailsError = useSelector(getOrderDetailsError);
+  const isAuthenticated = useSelector(getIsAuthenticated);
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [orderNumber, setOrderNumber] = useState(0);
 
+  const navigate = useNavigate();
+
   const closeModal = () => {
     setError(false);
     setModalOpen(false);
+    dispatch(clearOrderDetails());
   };
 
   useEffect(() => {
@@ -69,6 +77,13 @@ export const BurgerConstructor = () => {
       dispatch(clearIngredients());
     }
   }, [orderDetails]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     // Сброс состояния при размонтировании компонента
+  //     dispatch(clearOrder);
+  //   };
+  // }, [dispatch]);
 
   useEffect(() => {
     if (orderDetailsLoading) {
@@ -90,7 +105,11 @@ export const BurgerConstructor = () => {
   const bodyIngredients = useSelector(getConstructorIngredients);
 
   const handleOrderClick = () => {
-    dispatch(createOrder([bun, ...bodyIngredients, bun]));
+    if (isAuthenticated) {
+      dispatch(createOrder([bun, ...bodyIngredients, bun]));
+    } else {
+      navigate('/login');
+    }
   };
 
   const totalPrice = useMemo(() => {
@@ -113,7 +132,7 @@ export const BurgerConstructor = () => {
         canDrop={isBun && canDrop}
       />
     ) : (
-      <ConstructorElementPlaceholder
+      <ConstructorElementShadow
         isHover={isBun && isHover}
         canDrop={isBun && canDrop}
         type={ingredientType}
@@ -144,7 +163,7 @@ export const BurgerConstructor = () => {
         ))}
       </div>
     ) : (
-      <ConstructorElementPlaceholder
+      <ConstructorElementShadow
         type="body"
         text="Выберите и перетащите ингредиенты"
         isHover={!isBun && isHover}

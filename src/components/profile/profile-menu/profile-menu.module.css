@@ -1,0 +1,33 @@
+.nav_container {
+  display: grid;
+  width: 45vh;
+  margin-top: 20vh;
+  margin-right: 60px;
+}
+
+.link {
+  color: var(--text-inactive-color);
+  text-align: left;
+  text-decoration: none;
+}
+
+.link_active {
+  color: var(--text-primary-color);
+}
+
+.button {
+  color: var(--text-inactive-color);
+  text-align: left;
+  text-decoration: none;
+  background-color: unset;
+  border: none;
+}
+
+button:active {
+  color: var(--text-primary-color);
+  cursor: pointer;
+}
+
+.button:hover {
+  cursor: pointer;
+}
