@@ -23,7 +23,13 @@ export const orderDetailsSlice = createSlice({
     getOrderDetailsLoading: (state) => state.loading,
     getOrderDetailsError: (state) => state.error,
   },
-  reducers: {},
+  reducers: {
+    clearOrderDetails: (state) => {
+      state.order = null;
+      state.loading = false;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
@@ -43,5 +49,6 @@ export const orderDetailsSlice = createSlice({
   },
 });
 
+export const { clearOrderDetails } = orderDetailsSlice.actions;
 export const { getOrderDetails, getOrderDetailsError, getOrderDetailsLoading } =
   orderDetailsSlice.selectors;
