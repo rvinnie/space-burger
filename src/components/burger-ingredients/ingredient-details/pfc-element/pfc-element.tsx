@@ -2,7 +2,7 @@ import styles from './pfc-element.module.css';
 
 type PfcElementProps = {
   title: string;
-  value: string;
+  value: number;
 };
 
 export const PfcElement = ({ title, value }: PfcElementProps): React.JSX.Element => {

@@ -1,8 +1,17 @@
 import { getIngredientsAPI } from '@/api/space-api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialState = {
-  ingredients: [],
+import type { TIngredientsResponse } from '@/api/types';
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+type TBurgerIngredientsState = {
+  ingredients: TIngredientsResponse | null;
+  loading: boolean;
+  error: string | null;
+};
+
+const initialState: TBurgerIngredientsState = {
+  ingredients: null,
   loading: true,
   error: null,
 };
@@ -30,14 +39,17 @@ export const burgerIngredientsSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(loadIngredients.fulfilled, (state, action) => {
-        state.ingredients = action.payload;
-        state.loading = false;
-        state.error = null;
-      })
+      .addCase(
+        loadIngredients.fulfilled,
+        (state, action: PayloadAction<TIngredientsResponse>) => {
+          state.ingredients = action.payload;
+          state.loading = false;
+          state.error = null;
+        }
+      )
       .addCase(loadIngredients.rejected, (state, action) => {
         state.error = action.error?.message || 'Unknown error';
-        state.ingredients = [];
+        state.ingredients = null;
         state.loading = false;
       });
   },

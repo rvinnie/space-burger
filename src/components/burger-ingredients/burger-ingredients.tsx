@@ -1,8 +1,8 @@
 import { getBun, getConstructorIngredients } from '@/services/burder-constructor';
 import { getIngredients } from '@/services/burger-ingredients';
+import { useSelector } from '@/services/store';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
-import { useSelector } from 'react-redux';
 
 import { IngredientGroup } from '@components/burger-ingredients/ingredient-group/ingredient-group';
 
@@ -33,14 +33,12 @@ export const BurgerIngredients = (): React.JSX.Element => {
     const counts: IngredientsCounts = {};
 
     if (ingredientsInConstructor) {
-      // @ts-expect-error "sprint-5"
       ingredientsInConstructor.forEach((item: TIngredient) => {
         counts[item._id] = (counts[item._id] || 0) + 1;
       });
     }
 
     if (bunInConstructor) {
-      // @ts-expect-error "sprint-5"
       counts[bunInConstructor._id] = 2;
     }
 
@@ -127,8 +125,7 @@ export const BurgerIngredients = (): React.JSX.Element => {
             key={fieldName}
             groupName={valueName}
             ingredientsCounts={ingredientsCounts}
-            // @ts-expect-error "sprint-5"
-            ingredients={ingredients.data.filter(
+            ingredients={ingredients?.data.filter(
               (ingredient: TIngredient) => ingredient.type === fieldName
             )}
           />

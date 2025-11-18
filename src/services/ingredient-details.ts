@@ -1,6 +1,13 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-const initialState = {
+import type { TIngredient } from '@/shared/types/ingredient';
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+type TIngredientDetailsState = {
+  ingredient: TIngredient | null;
+};
+
+const initialState: TIngredientDetailsState = {
   ingredient: null,
 };
 
@@ -12,7 +19,7 @@ export const ingredientDetailsSlice = createSlice({
   },
   reducers: {
     setIngredient: {
-      reducer: (state, action) => {
+      reducer: (state, action: PayloadAction<TIngredient>) => {
         state.ingredient = action.payload;
       },
       prepare: (ingredient) => {

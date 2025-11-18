@@ -1,24 +1,24 @@
 import { removeIngredient } from '@/services/burder-constructor';
+import { useDispatch } from '@/services/store';
 import {
   ConstructorElement,
   DragIcon,
 } from '@krgaa/react-developer-burger-ui-components';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 
-import type { TIngredient } from '@/shared/types/ingredient';
+import type { TConstructorIngredient } from '@/shared/types/ingredient';
 import type { DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
 
 import styles from './constructor-element-container.module.css';
 
 type ConstructorElementContainerProps = {
-  ingredient: TIngredient & { constructorElementId?: string };
+  ingredient: TConstructorIngredient;
   index: number;
   ingredientType?: 'top' | 'bottom';
   isHover: boolean;
   canDrop: boolean;
-  handleMoveIngredients: (dragIdx: number, hoverIdx: number) => void;
+  handleMoveIngredients?: (dragIdx: number, hoverIdx: number) => void;
 };
 
 type DragItem = {
@@ -106,7 +106,7 @@ export const ConstructorElementContainer = ({
         return;
       }
 
-      handleMoveIngredients(dragIndex, hoverIndex);
+      handleMoveIngredients && handleMoveIngredients(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
   });

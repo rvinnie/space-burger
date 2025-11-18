@@ -1,7 +1,17 @@
 import { createOrderAPI } from '@/api/space-api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialState = {
+import type { TOrderResponse } from '@/api/types';
+import type { TConstructorIngredient } from '@/shared/types/ingredient';
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+type TOrderDetailsState = {
+  order: TOrderResponse | null;
+  loading: boolean;
+  error: string | null;
+};
+
+const initialState: TOrderDetailsState = {
   order: null,
   loading: false,
   error: null,
@@ -9,8 +19,9 @@ const initialState = {
 
 export const createOrder = createAsyncThunk(
   'order-details/createOrder',
-  async (ingredients) => {
-    const response = await createOrderAPI(ingredients);
+  async (ingredients: TConstructorIngredient[]) => {
+    const validIngredients = ingredients.filter(Boolean) as TConstructorIngredient[];
+    const response = await createOrderAPI(validIngredients);
     return response.data;
   }
 );
@@ -36,7 +47,7 @@ export const orderDetailsSlice = createSlice({
         state.error = null;
         state.loading = true;
       })
-      .addCase(createOrder.fulfilled, (state, action) => {
+      .addCase(createOrder.fulfilled, (state, action: PayloadAction<TOrderResponse>) => {
         state.order = action.payload;
         state.loading = false;
         state.error = null;

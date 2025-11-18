@@ -1,8 +1,7 @@
+import { setIngredient } from '@/services/ingredient-details';
+import { useDispatch } from '@/services/store';
 import { CurrencyIcon, Counter } from '@krgaa/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
-import { useDispatch } from 'react-redux';
-
-import { setIngredient } from '@services/ingredient-details';
 
 import type { TIngredient } from '@/shared/types/ingredient';
 import type { Ref } from 'react';

@@ -13,10 +13,10 @@ import {
   createOrder,
   clearOrderDetails,
 } from '@/services/order-details';
+import { useDispatch, useSelector } from '@/services/store';
 import { getIsAuthenticated } from '@/services/user';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { ConstructorElementContainer } from '@components/burger-constructor/constructor-element-container/constructor-element-container';
@@ -26,7 +26,7 @@ import { OrderDetails } from '@components/order/order-details/order-details';
 
 import { ConstructorElementShadow } from './constructor-element-shadow/constructor-element-shadow';
 
-import type { TIngredient } from '@/shared/types/ingredient';
+import type { TConstructorIngredient, TIngredient } from '@/shared/types/ingredient';
 
 import styles from './burger-constructor.module.css';
 
@@ -86,12 +86,10 @@ export const BurgerConstructor = (): React.JSX.Element => {
 
   useEffect(() => {
     if (orderDetails) {
-      // @ts-expect-error "sprint-5"
       setOrderNumber(orderDetails.order.number);
       setLoading(false);
       setModalOpen(true);
       setError(false);
-      // @ts-expect-error "sprint-5"
       dispatch(clearIngredients());
     }
   }, [orderDetails]);
@@ -117,22 +115,25 @@ export const BurgerConstructor = (): React.JSX.Element => {
 
   const handleOrderClick = (): void => {
     if (isAuthenticated) {
-      // @ts-expect-error "sprint-5"
-      dispatch(createOrder([bun, ...bodyIngredients, bun]));
+      const orderIngredients: TConstructorIngredient[] = [];
+
+      if (bun) {
+        orderIngredients.push(bun, ...bodyIngredients, bun);
+      } else {
+        orderIngredients.push(...bodyIngredients);
+      }
+      dispatch(createOrder(orderIngredients));
     } else {
       navigate('/login');
     }
   };
 
   const totalPrice = useMemo(() => {
-    // @ts-expect-error "sprint-5"
     const bunsPrice = bun !== null ? bun.price + bun.price : 0;
 
     const ingredientsPrice =
-      // @ts-expect-error "sprint-5"
       bodyIngredients.length !== 0
-        ? // @ts-expect-error "sprint-5"
-          bodyIngredients.reduce((total, ingredient) => total + ingredient.price, 0)
+        ? bodyIngredients.reduce((total, ingredient) => total + ingredient.price, 0)
         : 0;
 
     return bunsPrice + ingredientsPrice;
@@ -141,11 +142,11 @@ export const BurgerConstructor = (): React.JSX.Element => {
   const getBunBody = (ingredientType: 'top' | 'bottom'): React.JSX.Element => {
     return bun ? (
       <ConstructorElementContainer
-        // @ts-expect-error "sprint-5"
         ingredient={bun}
         ingredientType={ingredientType}
         isHover={isBun && isHover}
         canDrop={isBun && canDrop}
+        index={0}
       />
     ) : (
       <ConstructorElementShadow
@@ -165,22 +166,18 @@ export const BurgerConstructor = (): React.JSX.Element => {
   );
 
   const getIngredientsBody = (): React.JSX.Element => {
-    // @ts-expect-error "sprint-5"
     return bodyIngredients.length > 0 ? (
       <div className={`${styles.constructor_body}`}>
-        {
-          // @ts-expect-error "sprint-5"
-          bodyIngredients.map((ingredient, index) => (
-            <ConstructorElementContainer
-              ingredient={ingredient}
-              index={index}
-              key={ingredient.constructorElementId}
-              isHover={!isBun && isHover}
-              canDrop={!isBun && canDrop}
-              handleMoveIngredients={handleMoveIngredients}
-            />
-          ))
-        }
+        {bodyIngredients.map((ingredient, index) => (
+          <ConstructorElementContainer
+            ingredient={ingredient}
+            index={index}
+            key={ingredient.constructorElementId}
+            isHover={!isBun && isHover}
+            canDrop={!isBun && canDrop}
+            handleMoveIngredients={handleMoveIngredients}
+          />
+        ))}
       </div>
     ) : (
       <ConstructorElementShadow
@@ -192,7 +189,6 @@ export const BurgerConstructor = (): React.JSX.Element => {
     );
   };
 
-  // @ts-expect-error "sprint-5"
   const isPriceDisabled = bun === null || bodyIngredients.length === 0;
   const modalHeader = isError ? 'Произошла ошибка...' : '';
 

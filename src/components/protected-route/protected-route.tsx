@@ -1,6 +1,6 @@
+import { useSelector } from '@/services/store';
 import { getIsAuthChecked, getUser } from '@/services/user';
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
 type ProtectedRouteProps = {

@@ -8,7 +8,7 @@ import type { TIngredient } from '@/shared/types/ingredient';
 import styles from './ingredient-group.module.css';
 
 type IngredientGroupProps = {
-  ingredients: TIngredient[];
+  ingredients: TIngredient[] | undefined;
   groupName: string;
   ingredientsCounts: Record<string, number>;
 };

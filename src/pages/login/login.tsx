@@ -1,9 +1,9 @@
 import { AdditionalActionContainer } from '@/components/registration/additional-action-container/additional-action-container';
 import { RegistrationContainer } from '@/components/registration/registration-container/registration-container';
+import { useDispatch, useSelector } from '@/services/store';
 import { getLoginError, login } from '@/services/user';
 import { Button, EmailInput, Input } from '@krgaa/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './login.module.css';
@@ -23,7 +23,6 @@ export const Login = (): React.JSX.Element => {
 
   const handleLoginClick = async (): Promise<void> => {
     try {
-      // @ts-expect-error "sprint-5"
       await dispatch(login({ email, password })).unwrap();
       navigate(from.pathname, { replace: true });
     } catch {

@@ -1,9 +1,9 @@
 import { AdditionalActionContainer } from '@/components/registration/additional-action-container/additional-action-container';
 import { RegistrationContainer } from '@/components/registration/registration-container/registration-container';
+import { useDispatch, useSelector } from '@/services/store';
 import { getRegisterError, register as registerAction } from '@/services/user';
 import { Button, EmailInput, Input } from '@krgaa/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './register.module.css';
@@ -23,7 +23,6 @@ export const Register = (): React.JSX.Element => {
 
   const handleRegisterClick = async (): Promise<void> => {
     try {
-      // @ts-expect-error "sprint-5"
       await dispatch(registerAction({ name, email, password })).unwrap();
       navigate('/profile', { replace: true });
     } catch {

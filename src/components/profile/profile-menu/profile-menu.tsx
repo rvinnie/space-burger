@@ -1,5 +1,5 @@
+import { useDispatch } from '@/services/store';
 import { logout } from '@/services/user';
-import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import styles from './profile-menu.module.css';
@@ -9,7 +9,6 @@ export const ProfileMenu = (): React.JSX.Element => {
   const location = useLocation();
 
   const handleLogout = (): void => {
-    // @ts-expect-error "sprint-5"
     dispatch(logout());
   };
 

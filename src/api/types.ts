@@ -1,4 +1,5 @@
 import type { TIngredient } from '@/shared/types/ingredient';
+import type { AxiosError } from 'axios';
 
 type TLoginRequest = {
   email: string;
@@ -22,6 +23,7 @@ type TUser = {
 };
 
 type TAuthResponse = {
+  success: boolean;
   accessToken: string;
   refreshToken: string;
   user: TUser;
@@ -67,6 +69,14 @@ type TIngredientsResponse = {
   data: TIngredient[];
 };
 
+type TApiError = {
+  message: string;
+  success?: boolean;
+  [key: string]: unknown;
+};
+
+type TAxiosErrorWithApiResponse = AxiosError<TApiError>;
+
 export type {
   TLoginRequest,
   TRegisterRequest,
@@ -79,4 +89,6 @@ export type {
   TUserResponse,
   TMessageResponse,
   TIngredientsResponse,
+  TAxiosErrorWithApiResponse,
+  TApiError,
 };

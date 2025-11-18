@@ -1,7 +1,7 @@
+import { useDispatch, useSelector } from '@/services/store';
 import { getUser, updateUser } from '@/services/user';
 import { Button, Input } from '@krgaa/react-developer-burger-ui-components';
 import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import type { FormEvent } from 'react';
 
@@ -10,10 +10,8 @@ import styles from './profile-account.module.css';
 export const ProfileAccount = (): React.JSX.Element => {
   const user = useSelector(getUser);
 
-  // @ts-expect-error "sprint-5"
-  const [name, setName] = useState<string>(user?.name);
-  // @ts-expect-error "sprint-5"
-  const [email, setEmail] = useState<string>(user?.email);
+  const [name, setName] = useState<string>(user?.name || '');
+  const [email, setEmail] = useState<string>(user?.email || '');
   const [password, setPassword] = useState<string>('');
   const [isNameDisabled, setIsNameDisabled] = useState<boolean>(true);
   const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
@@ -28,7 +26,6 @@ export const ProfileAccount = (): React.JSX.Element => {
   const handleSaveClick = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    // @ts-expect-error "sprint-5"
     dispatch(updateUser({ name, email, password }));
     setIsEmailDisabled(true);
     setIsNameDisabled(true);
@@ -36,10 +33,8 @@ export const ProfileAccount = (): React.JSX.Element => {
   };
 
   const handleCancelClick = (): void => {
-    // @ts-expect-error "sprint-5"
-    setName(user?.name);
-    // @ts-expect-error "sprint-5"
-    setEmail(user?.email);
+    setName(user?.name || '');
+    setEmail(user?.email || '');
     setPassword('');
     setIsEmailDisabled(true);
     setIsNameDisabled(true);
@@ -47,7 +42,6 @@ export const ProfileAccount = (): React.JSX.Element => {
   };
 
   const isEnabled =
-    // @ts-expect-error "sprint-5"
     name !== user?.name || email !== user?.email || password.length !== 0;
 
   return (

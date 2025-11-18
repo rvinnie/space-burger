@@ -1,6 +1,6 @@
-import { getIngredients } from '@/services/burger-ingredients';
+import { getIngredients } from '@/services/burger-ingredients.ts';
+import { useSelector } from '@/services/store';
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { PfcElement } from './pfc-element/pfc-element';
@@ -12,12 +12,10 @@ export const IngredientDetails = (): React.JSX.Element => {
 
   const ingredients = useSelector(getIngredients);
 
-  // @ts-expect-error "sprint-5"
   if (!ingredients?.data) {
     return <Preloader />;
   }
 
-  // @ts-expect-error "sprint-5"
   const ingredient = ingredients.data.find((ingredient) => ingredient._id === params.id);
 
   if (!ingredient) {

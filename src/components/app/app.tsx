@@ -7,10 +7,10 @@ import { ProfileOrders } from '@/pages/profile-orders/profile-orders';
 import { Profile } from '@/pages/profile/profile';
 import { Register } from '@/pages/register/register';
 import { ResetPassword } from '@/pages/reset-password/reset-password';
+import { useDispatch, useSelector } from '@/services/store';
 import { loadUser } from '@/services/user';
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { AppHeader } from '@components/app-header/app-header';
@@ -38,9 +38,7 @@ export const App = (): React.JSX.Element => {
   const state = location.state;
 
   useEffect(() => {
-    // @ts-expect-error "sprint-5"
     dispatch(loadIngredients());
-    // @ts-expect-error "sprint-5"
     dispatch(loadUser());
   }, []);
 
@@ -56,8 +54,7 @@ export const App = (): React.JSX.Element => {
           <Preloader />
         ) : ingredientsError ? (
           errComponent
-        ) : // @ts-expect-error "sprint-5"
-        ingredients && ingredients.data && ingredients.data.length > 0 ? (
+        ) : ingredients && ingredients.data && ingredients.data.length > 0 ? (
           <>
             <Routes location={state?.backgroundLocation || location}>
               <Route
