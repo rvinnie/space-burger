@@ -1,6 +1,9 @@
 import type { TIngredient } from '@/shared/types/ingredient';
 import type { AxiosError } from 'axios';
 
+export const BASE_HTTP_URL = 'https://norma.education-services.ru/api';
+export const BASE_WS_URL = 'wss://norma.education-services.ru/orders';
+
 type TLoginRequest = {
   email: string;
   password: string;
@@ -36,7 +39,7 @@ type TOrderOwner = {
   updatedAt: string;
 };
 
-type TOrder = {
+type TCreateOrder = {
   ingredients: TIngredient[];
   _id: string;
   owner: TOrderOwner;
@@ -48,10 +51,28 @@ type TOrder = {
   price: number;
 };
 
-type TOrderResponse = {
+type TCreateOrderResponse = {
   success: boolean;
   name: string;
-  order: TOrder;
+  order: TCreateOrder;
+};
+
+type TFindOrder = {
+  _id: string;
+  ingredients: string[];
+  owner: string;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+};
+
+type TFoundOrderResponse = {
+  success: boolean;
+  orders: TFindOrder[];
+  total: number;
+  totalToday: number;
 };
 
 type TUserResponse = {
@@ -83,9 +104,9 @@ export type {
   TResetPassword,
   TUser,
   TAuthResponse,
-  TOrderOwner,
-  TOrder,
-  TOrderResponse,
+  TCreateOrderResponse,
+  TFoundOrderResponse,
+  TFindOrder,
   TUserResponse,
   TMessageResponse,
   TIngredientsResponse,

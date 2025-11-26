@@ -24,6 +24,8 @@ import {
 import { IngredientDetailsWrapper } from '../burger-ingredients/ingredient-details-wrapper/ingredient-details-wrapper';
 import { IngredientDetails } from '../burger-ingredients/ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
+import { OrderInfoWrapper } from '../order/order-info-wrapper/order-info-wrapper';
+import { OrderInfo } from '../order/order-info/order-info';
 import { ProtectedRoute } from '../protected-route/protected-route';
 
 import styles from './app.module.css';
@@ -123,11 +125,22 @@ export const App = (): React.JSX.Element => {
                 />
               </Route>
               <Route
-                path="feed"
+                path="profile/orders/:id"
                 element={
                   <ProtectedRoute>
-                    <Feed />
+                    <OrderInfoWrapper>
+                      <OrderInfo centerHeader />
+                    </OrderInfoWrapper>
                   </ProtectedRoute>
+                }
+              />
+              <Route path="feed" element={<Feed />} />
+              <Route
+                path="/feed/:id"
+                element={
+                  <OrderInfoWrapper>
+                    <OrderInfo centerHeader />
+                  </OrderInfoWrapper>
                 }
               />
               <Route path="*" element={<Home />} />
@@ -140,6 +153,22 @@ export const App = (): React.JSX.Element => {
                   element={
                     <Modal header={'Детали ингредиента'}>
                       <IngredientDetails />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path="/feed/:id"
+                  element={
+                    <Modal>
+                      <OrderInfo />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path="/profile/orders/:id"
+                  element={
+                    <Modal>
+                      <OrderInfo />
                     </Modal>
                   }
                 />

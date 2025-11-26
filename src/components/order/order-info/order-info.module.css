@@ -1,0 +1,21 @@
+.order_number {
+  margin-top: -50px;
+}
+
+.center_order_number {
+  text-align: center;
+}
+
+.price {
+  display: flex;
+}
+
+.date {
+  color: #8585ad;
+}
+
+.order_date_price {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}

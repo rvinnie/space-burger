@@ -1,0 +1,15 @@
+.two_columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: start;
+  gap: 36px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.done_orders {
+  color: #0cc;
+}

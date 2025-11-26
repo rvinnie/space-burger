@@ -1,0 +1,8 @@
+.order_info_wrapper {
+  display: grid;
+  max-width: 50%;
+  height: 100vh;
+  margin: 0 auto;
+  padding-top: 80px;
+  place-items: center;
+}

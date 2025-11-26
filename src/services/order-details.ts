@@ -1,20 +1,28 @@
-import { createOrderAPI } from '@/api/space-api';
+import { createOrderAPI, findOrderAPI } from '@/api/space-api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import type { TOrderResponse } from '@/api/types';
+import type { TCreateOrderResponse, TFoundOrderResponse } from '@/api/types';
 import type { TConstructorIngredient } from '@/shared/types/ingredient';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type TOrderDetailsState = {
-  order: TOrderResponse | null;
-  loading: boolean;
-  error: string | null;
+  createdOrder: TCreateOrderResponse | null;
+  createLoading: boolean;
+  createError: string | null;
+
+  foundOrder: TFoundOrderResponse | null;
+  findLoading: boolean;
+  findError: string | null;
 };
 
 const initialState: TOrderDetailsState = {
-  order: null,
-  loading: false,
-  error: null,
+  createdOrder: null,
+  createLoading: false,
+  createError: null,
+
+  foundOrder: null,
+  findLoading: false,
+  findError: null,
 };
 
 export const createOrder = createAsyncThunk(
@@ -26,40 +34,77 @@ export const createOrder = createAsyncThunk(
   }
 );
 
+export const findOrder = createAsyncThunk(
+  'order-details/findOrder',
+  async (orderNum: string) => {
+    const response = await findOrderAPI(orderNum);
+    return response.data;
+  }
+);
+
 export const orderDetailsSlice = createSlice({
   name: 'order-details',
   initialState: initialState,
   selectors: {
-    getOrderDetails: (state) => state.order,
-    getOrderDetailsLoading: (state) => state.loading,
-    getOrderDetailsError: (state) => state.error,
+    getCreatedOrderDetails: (state) => state.createdOrder,
+    getCreateOrderDetailsLoading: (state) => state.createLoading,
+    getCreateOrderDetailsError: (state) => state.createError,
+    getFoundOrderDetails: (state) => state.foundOrder,
+    getFindOrderDetailsLoading: (state) => state.findLoading,
+    getFindOrderDetailsError: (state) => state.findError,
   },
   reducers: {
     clearOrderDetails: (state) => {
-      state.order = null;
-      state.loading = false;
-      state.error = null;
+      state.createdOrder = null;
+      state.createLoading = false;
+      state.createError = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
-        state.error = null;
-        state.loading = true;
+        state.createError = null;
+        state.createLoading = true;
       })
-      .addCase(createOrder.fulfilled, (state, action: PayloadAction<TOrderResponse>) => {
-        state.order = action.payload;
-        state.loading = false;
-        state.error = null;
-      })
+      .addCase(
+        createOrder.fulfilled,
+        (state, action: PayloadAction<TCreateOrderResponse>) => {
+          state.createdOrder = action.payload;
+          state.createLoading = false;
+          state.createError = null;
+        }
+      )
       .addCase(createOrder.rejected, (state, action) => {
-        state.order = null;
-        state.loading = false;
-        state.error = action.error?.message || 'Unknown error';
+        state.createdOrder = null;
+        state.createLoading = false;
+        state.createError = action.error?.message || 'Unknown error';
+      })
+      .addCase(findOrder.pending, (state) => {
+        state.findError = null;
+        state.findLoading = true;
+      })
+      .addCase(
+        findOrder.fulfilled,
+        (state, action: PayloadAction<TFoundOrderResponse>) => {
+          state.foundOrder = action.payload;
+          state.findLoading = false;
+          state.findError = null;
+        }
+      )
+      .addCase(findOrder.rejected, (state, action) => {
+        state.foundOrder = null;
+        state.findLoading = false;
+        state.findError = action.error?.message || 'Unknown error';
       });
   },
 });
 
 export const { clearOrderDetails } = orderDetailsSlice.actions;
-export const { getOrderDetails, getOrderDetailsError, getOrderDetailsLoading } =
-  orderDetailsSlice.selectors;
+export const {
+  getCreatedOrderDetails,
+  getCreateOrderDetailsError,
+  getCreateOrderDetailsLoading,
+  getFoundOrderDetails,
+  getFindOrderDetailsLoading,
+  getFindOrderDetailsError,
+} = orderDetailsSlice.selectors;
