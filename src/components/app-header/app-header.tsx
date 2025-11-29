@@ -48,9 +48,9 @@ export const AppHeader = (): React.JSX.Element => {
             )}
           </NavLink>
         </div>
-        <div className={styles.logo}>
+        <NavLink to="/" className={styles.logo}>
           <Logo />
-        </div>
+        </NavLink>
         <NavLink
           to="/profile"
           className={`${styles.link} ${styles.link_position_last} ${

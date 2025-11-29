@@ -1,10 +1,10 @@
 import { getIngredientsMap } from '@/services/burger-ingredients';
+import { useSelector } from '@/services/store';
 import {
   CurrencyIcon,
   FormattedDate,
 } from '@krgaa/react-developer-burger-ui-components';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 
 import { getStatusInfo } from '../../utils/utils';
 import { IngredientsStack } from './ingredients-stack/ingredients-stack';
