@@ -1,0 +1,7 @@
+.status_completed {
+  color: #0cc;
+}
+
+.status_canceled {
+  color: var(--colors-interface-error);
+}

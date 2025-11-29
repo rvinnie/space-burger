@@ -6,20 +6,61 @@ import {
 
 import { burgerConstructorSlice } from './burder-constructor';
 import { burgerIngredientsSlice } from './burger-ingredients';
+import {
+  connectFeed,
+  disconnectFeed,
+  feedSlice,
+  onErrorFeed,
+  onMessageFeed,
+  onConnectingFeed,
+} from './feed';
 import { ingredientDetailsSlice } from './ingredient-details';
+import { socketMiddleware } from './middleware/socket';
 import { orderDetailsSlice } from './order-details';
+import {
+  connectProfileOrders,
+  disconnectProfileOrders,
+  onConnectingProfileOrders,
+  onErrorProfileOrders,
+  onMessageProfileOrders,
+  profileOrdersSlice,
+} from './profile-orders';
 import { userSlice } from './user';
 
 const rootReducer = combineSlices(
   burgerConstructorSlice,
   burgerIngredientsSlice,
+  feedSlice,
+  profileOrdersSlice,
   ingredientDetailsSlice,
   orderDetailsSlice,
   userSlice
 );
 
+const feedMiddleware = socketMiddleware({
+  connect: connectFeed,
+  disconnect: disconnectFeed,
+  onMessage: onMessageFeed,
+  onError: onErrorFeed,
+  onConnecting: onConnectingFeed,
+});
+
+const profileOrdersMiddleware = socketMiddleware(
+  {
+    connect: connectProfileOrders,
+    disconnect: disconnectProfileOrders,
+    onMessage: onMessageProfileOrders,
+    onError: onErrorProfileOrders,
+    onConnecting: onConnectingProfileOrders,
+  },
+  true
+);
+
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(feedMiddleware, profileOrdersMiddleware);
+  },
   devTools: process.env.NODE_ENV !== 'production',
 });
 

@@ -7,9 +7,9 @@ import {
   setBun,
 } from '@/services/burder-constructor';
 import {
-  getOrderDetails,
-  getOrderDetailsError,
-  getOrderDetailsLoading,
+  getCreatedOrderDetails,
+  getCreateOrderDetailsError,
+  getCreateOrderDetailsLoading,
   createOrder,
   clearOrderDetails,
 } from '@/services/order-details';
@@ -66,9 +66,9 @@ export const BurgerConstructor = (): React.JSX.Element => {
     },
   });
 
-  const orderDetails = useSelector(getOrderDetails);
-  const orderDetailsLoading = useSelector(getOrderDetailsLoading);
-  const orderDetailsError = useSelector(getOrderDetailsError);
+  const orderDetails = useSelector(getCreatedOrderDetails);
+  const orderDetailsLoading = useSelector(getCreateOrderDetailsLoading);
+  const orderDetailsError = useSelector(getCreateOrderDetailsError);
   const isAuthenticated = useSelector(getIsAuthenticated);
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);

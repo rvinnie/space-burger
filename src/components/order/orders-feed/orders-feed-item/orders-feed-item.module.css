@@ -1,0 +1,26 @@
+.order_item {
+  background-color: #1c1c21;
+  border-radius: 30px;
+}
+
+.order_number_date {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.date {
+  color: #8585ad;
+}
+
+.order_ingredients_price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin: 0 auto;
+}
+
+.price {
+  display: flex;
+}

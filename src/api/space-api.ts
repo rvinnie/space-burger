@@ -1,6 +1,19 @@
 import { clearTokens, getToken, setTokens } from '@/utils/token';
 import axios from 'axios';
 
+import {
+  BASE_HTTP_URL,
+  type TAuthResponse,
+  type TIngredientsResponse,
+  type TLoginRequest,
+  type TMessageResponse,
+  type TCreateOrderResponse,
+  type TRegisterRequest,
+  type TResetPassword,
+  type TUserResponse,
+  type TFoundOrderResponse,
+} from './types';
+
 import type { TIngredient } from '@/shared/types/ingredient';
 import type {
   AxiosError,
@@ -9,19 +22,6 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-
-import type {
-  TAuthResponse,
-  TIngredientsResponse,
-  TLoginRequest,
-  TMessageResponse,
-  TOrderResponse,
-  TRegisterRequest,
-  TResetPassword,
-  TUserResponse,
-} from './types';
-
-const BASE_URL = 'https://norma.education-services.ru/api';
 
 type CustomAxiosRequestConfig = {
   requiresAuth?: boolean;
@@ -36,7 +36,7 @@ type ApiError = {
 };
 
 const instance: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_HTTP_URL,
 });
 
 let isRefreshing = false;
@@ -106,10 +106,16 @@ export const getIngredientsAPI = (): Promise<AxiosResponse<TIngredientsResponse>
 
 export const createOrderAPI = (
   ingredients: TIngredient[]
-): Promise<AxiosResponse<TOrderResponse>> => {
+): Promise<AxiosResponse<TCreateOrderResponse>> => {
   return instance.post('/orders', { ingredients }, {
     requiresAuth: true,
   } as CustomAxiosRequestConfig);
+};
+
+export const findOrderAPI = (
+  orderNum: string
+): Promise<AxiosResponse<TFoundOrderResponse>> => {
+  return instance.get(`/orders/${orderNum}`);
 };
 
 export const forgotPasswordAPI = (

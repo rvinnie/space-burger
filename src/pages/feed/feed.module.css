@@ -1,0 +1,35 @@
+.preloader {
+  display: flex;
+  height: 535px;
+}
+
+.title {
+  width: 100%;
+  max-width: 1260px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.feed_with_info {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  width: 1240px;
+  height: calc(100vh - 200px);
+  margin: 0 auto;
+}
+
+.orders_feed_container {
+  flex: 1;
+  max-height: 100%;
+  padding-right: 8px;
+  overflow-y: auto;
+}
+
+.orders_info_container {
+  flex: 1;
+  justify-content: space-between;
+  max-height: 100%;
+  padding-right: 8px;
+  overflow-y: auto;
+}

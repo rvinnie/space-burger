@@ -1,0 +1,21 @@
+.digits_shadow {
+  text-shadow: 0 0 15px #4c4cff;
+}
+
+.columns_by_status {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.column {
+  flex: 0 0 260px;
+}
+
+.orders_info {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
