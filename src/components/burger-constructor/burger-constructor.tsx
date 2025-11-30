@@ -5,7 +5,7 @@ import {
   moveIngredients,
   clearIngredients,
   setBun,
-} from '@/services/burder-constructor';
+} from '@/services/burger-constructor';
 import {
   getCreatedOrderDetails,
   getCreateOrderDetailsError,
@@ -195,6 +195,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
   return (
     <section className={`${styles.burger_constructor} ml-4`}>
       <section
+        data-cy="burger-constructor"
         ref={dropTarget as unknown as React.RefObject<HTMLElement>}
         className={`${styles.constructor_container}`}
       >

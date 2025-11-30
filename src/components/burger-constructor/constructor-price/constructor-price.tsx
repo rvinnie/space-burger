@@ -20,15 +20,17 @@ export const ConstructorPrice = ({
         <CurrencyIcon type="primary" />
       </div>
 
-      <Button
-        disabled={isDisabled}
-        onClick={onModalOpen}
-        size="medium"
-        type="primary"
-        htmlType={'button'}
-      >
-        Оформить заказ
-      </Button>
+      <div data-cy="order-button">
+        <Button
+          disabled={isDisabled}
+          onClick={onModalOpen}
+          size="medium"
+          type="primary"
+          htmlType={'button'}
+        >
+          Оформить заказ
+        </Button>
+      </div>
     </section>
   );
 };

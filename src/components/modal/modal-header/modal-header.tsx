@@ -13,7 +13,7 @@ export const ModalHeader = ({
 }: ModalHeaderProps): React.JSX.Element => {
   return (
     <div className={`${styles.modal_header} text text_type_main-large`}>
-      <button className={styles.modal_button}>
+      <button className={styles.modal_button} data-cy="close-modal-button">
         <CloseIcon onClick={onClose} type="primary" />
       </button>
       {children}

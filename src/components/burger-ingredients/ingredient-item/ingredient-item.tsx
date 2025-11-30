@@ -29,6 +29,7 @@ export const IngredientItem = ({
 
   return (
     <section
+      data-cy={`ingredient-item-${ingredientInfo.type}`}
       ref={dragRef as unknown as Ref<HTMLElement>}
       className={`${styles.ingredient_item}`}
       onClick={onClickIngredient}

@@ -4,7 +4,7 @@ import {
   useSelector as useSelectorRedux,
 } from 'react-redux';
 
-import { burgerConstructorSlice } from './burder-constructor';
+import { burgerConstructorSlice } from './burger-constructor';
 import { burgerIngredientsSlice } from './burger-ingredients';
 import {
   connectFeed,
