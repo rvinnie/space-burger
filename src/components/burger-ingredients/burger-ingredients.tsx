@@ -1,4 +1,4 @@
-import { getBun, getConstructorIngredients } from '@/services/burder-constructor';
+import { getBun, getConstructorIngredients } from '@/services/burger-constructor';
 import { getIngredients } from '@/services/burger-ingredients';
 import { useSelector } from '@/services/store';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';

@@ -107,6 +107,7 @@ export type {
   TCreateOrderResponse,
   TFoundOrderResponse,
   TFindOrder,
+  TOrderOwner,
   TUserResponse,
   TMessageResponse,
   TIngredientsResponse,

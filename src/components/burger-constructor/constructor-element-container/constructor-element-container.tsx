@@ -1,4 +1,4 @@
-import { removeIngredient } from '@/services/burder-constructor';
+import { removeIngredient } from '@/services/burger-constructor';
 import { useDispatch } from '@/services/store';
 import {
   ConstructorElement,

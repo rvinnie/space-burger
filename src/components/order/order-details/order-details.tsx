@@ -30,7 +30,7 @@ export const OrderDetails = ({
   }
 
   return (
-    <section className={`${styles.order_details}`}>
+    <section className={`${styles.order_details}`} data-cy="order-modal">
       <div className={`${styles.order_number} text text_type_digits-large mb-8`}>
         {orderNumber}
       </div>

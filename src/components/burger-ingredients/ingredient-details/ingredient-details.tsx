@@ -25,7 +25,7 @@ export const IngredientDetails = (): React.JSX.Element => {
   }
 
   return (
-    <section className={`${styles.ingredient_details}`}>
+    <section className={`${styles.ingredient_details}`} data-cy="ingredient-details">
       <img className={'mb-4'} src={ingredient.image_large} alt={ingredient.name} />
       <div className="text text_type_main-medium mb-8">{ingredient.name}</div>
       <div className={`${styles.pfc_container} mb-5 pl-10 pr-10`}>
